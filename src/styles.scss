@@ -2,6 +2,7 @@
 
 body {
   background-color: rgb(36, 36, 36);
+  font-family: sans-serif;
 }
 
 .game {
@@ -18,14 +19,13 @@ body {
   background-color: #D9D9D9;
 }
 .button {
-  all: none;
-  
-}
-.button__start-game {
   padding: 20px 40px;
   background-color: white;
   border-radius: 20px;
   border: 1px solid grey;
+  font-size: 3.125rem;
+
+
   &:hover {
     background-color: green;
     border: 1px solid transparent
@@ -34,6 +34,7 @@ body {
     display: none;
   }
 }
+
 
 .card {
   display: flex;
@@ -44,9 +45,6 @@ body {
   border-radius: 30px;
   width: 200px;
   height: 300px;
-  &:hover {
-    background-color: yellow;
-  }
 }
 .card__field {
   display: none;
@@ -57,5 +55,20 @@ body {
     grid-template-rows: repeat(2, 1fr);
     column-gap: 30px;
     row-gap: 30px;
+  }
+}
+
+.bg-green {
+  background-color: red;
+}
+
+.score__board {
+  display: flex;
+  flex-direction: column;
+  gap: 30px;
+  align-items: center;
+  font-size: 2rem;
+  &--invisible {
+    display: none;
   }
 }
