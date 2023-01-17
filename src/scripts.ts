@@ -8,15 +8,24 @@ const startButton = document.querySelector(".js-start-button");
 const tryAgainButton = document.querySelector(".js-try-again-button");
 const scoreTitle = document.querySelector(".js-score-title");
 const scoreInfo = document.querySelector(".js-score-info");
+const giveUpButton = document.querySelector(".js-button-give-up");
+//timer
+const startTime = performance.now();
+const timer = document.querySelector(".js-timer");
 
 //----------------makes card field(noskatījos no Jāņa parauga)
 
 for (let i = 0; i < randomCardArr.length; i++) {
-    let card = document.createElement("button");
-    card.innerHTML = `Card element ${randomCardArr[i]}`;
+    let card = document.createElement("div");
     card.classList.add("card");
     card.classList.add("js-single-card");
-    cardField.appendChild(card)    
+    cardField.appendChild(card) 
+    //back face     
+    let cardFaceBack = document.createElement("div");
+    cardFaceBack.classList.add("card__face");
+    cardFaceBack.classList.add("card__face--back");
+    card.appendChild(cardFaceBack)
+    cardFaceBack.innerHTML = `${randomCardArr[i]}`;
 }
 
 //----------------Game Start(easy)
@@ -24,6 +33,12 @@ for (let i = 0; i < randomCardArr.length; i++) {
 startButton.addEventListener("click", () => {
     startButton.classList.add("button--hidden");
     cardField.classList.add('card__field--visible');
+    giveUpButton.classList.remove('button__give-up--hidden');
+    //timer
+    setInterval(function() {
+        let elapsed = (performance.now() - startTime)/ 1000; //convert to seconds
+        timer.textContent = "Elapsed Time: " + Math.round(elapsed) + " seconds";
+      }, 1000);
 });
 
 console.log(randomCardArr)//tests
@@ -50,7 +65,7 @@ for (let i = 0; i < allCards.length; i++) {
     roundTurn++
 
     selectedCards.push(indexOfSelectedCard)
-    allCards[indexOfSelectedCard].classList.add('bg-green')
+    allCards[indexOfSelectedCard].classList.add('is-flipped')
     allCards[indexOfSelectedCard].setAttribute('disabled','disabled'); 
     
     //pārbaudam vai ir pareizā kombinācija vai nē un rīkojamies  
@@ -62,8 +77,8 @@ for (let i = 0; i < allCards.length; i++) {
     } else if ((selectedCards.length == 2) && (randomCardArr[selectedCards[0]] !== randomCardArr[selectedCards[1]])) {
         allCards[selectedCards[0]].removeAttribute('disabled');
         allCards[selectedCards[1]].removeAttribute('disabled');
-        allCards[selectedCards[0]].classList.remove('bg-green');
-        allCards[selectedCards[1]].classList.remove('bg-green');
+        allCards[selectedCards[0]].classList.remove('is-flipped');
+        allCards[selectedCards[1]].classList.remove('is-flipped');
         console.log('nav trāpīts')//tests
         selectedCards = []  
     }
@@ -71,15 +86,21 @@ for (let i = 0; i < allCards.length; i++) {
     console.log(roundTurn)//tests;
     console.log(selectedCards)//tests;
     
-    //win condition
-    if (guessedCards === randomCardArr.length) {
-        console.log('Chicken dinner')//tests;
-        cardField.classList.remove('card__field--visible');
-        scoreBoard.classList.remove('score__board--invisible')
-        scoreTitle.textContent = 'Winner winner chicken dinner!'
-        scoreInfo.textContent = `You did it in ${roundTurn} turns`
-    }
 
+
+
+
+    //win condition
+    setTimeout(() => { 
+        if (guessedCards === randomCardArr.length) {
+            console.log('Chicken dinner')//tests;
+            cardField.classList.remove('card__field--visible');
+            scoreBoard.classList.remove('score__board--invisible')
+            scoreTitle.textContent = 'Winner winner chicken dinner!';
+            scoreInfo.textContent = `You did it in ${roundTurn} turns`;
+            giveUpButton.classList.add('button__give-up--hidden');
+        }
+    }, 5000)
   });
 }
 //----------------restart game
@@ -87,10 +108,11 @@ tryAgainButton.addEventListener("click", () => {
     window.location.reload()
 });
 
-
-
-
-
-
-
-
+//----------------give up
+giveUpButton.addEventListener("click", () => {
+    cardField.classList.remove('card__field--visible');
+    scoreBoard.classList.remove('score__board--invisible');
+    scoreTitle.textContent = 'At least You tried!';
+    scoreInfo.textContent = `You done ${roundTurn} turns`;
+    giveUpButton.classList.add('button__give-up--hidden');
+});
