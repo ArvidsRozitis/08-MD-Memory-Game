@@ -76,6 +76,7 @@ const checkCards = (e: any) => {
 //----------------win condition
     if (winningPairs === randomCardArr.length) {
         clearInterval(int);
+        timer.classList.add('timer--hidden')
         setTimeout(() => { 
             console.log('Chicken dinner')//tests;
             cardField.classList.remove('card__field--visible');
