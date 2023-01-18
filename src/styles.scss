@@ -18,7 +18,8 @@ body {
 }
 
 .game {
-  background-color: #D9D9D9;
+  background: linear-gradient( 112.1deg,  rgba(32,38,57,1) 11.4%, rgba(63,76,119,1) 70.2% );
+  
 }
 .game__board {
   display: flex;
@@ -33,7 +34,17 @@ body {
 
 .timer {
   position: absolute;
-  top: 50px;
+  top: 30px;
+  color: #fff;
+  font-size: 3rem;  
+  -webkit-mask-image: linear-gradient(-75deg, rgba(0,0,0,.6) 30%, #000 50%, rgba(0,0,0,.6) 70%);
+  -webkit-mask-size: 200%;
+  animation: shine 2s linear infinite; 
+
+  @keyframes shine {
+    from { -webkit-mask-position: 150%; }
+    to { -webkit-mask-position: -50%; }
+  }
 
   &--hidden {
     display: none;
@@ -41,20 +52,45 @@ body {
 }
 
 .button {
+  position: relative;
   padding: 20px 40px;
-  background-color: white;
-  border-radius: 20px;
-  border: 1px solid grey;
-  font-size: 3.125rem;
-
+  color: var(--c-btn-text);
+  font-size: 5rem;
+  border-radius: 8px;
+  border: 1px solid black;
+  cursor: pointer;
+  overflow: hidden;
+  transition: 1s all ease;
+  &::before{
+    background: rgb(44, 138, 114);
+    content: "";
+    position: absolute;
+    top: 50%;
+    left: 50%;
+    transform: translate(-50%,-50%);
+    z-index: -1;
+    transition: all 0.6s ease;
+  }
   &:hover {
-    background-color: green;
-    border: 1px solid transparent
+    opacity: 0.6;
+    font-size: 5.2rem;
+
+  }  
+  &::before{
+    width: 0%;
+    height: 100%;
+  }  
+  &:hover::before{
+    width: 100%;
+  }
+  &:focus {
+    outline: none;
   }
   &--hidden {
     display: none;
   }
 }
+
 .button__give-up {
   display: flex;
   justify-content: center;
@@ -75,7 +111,7 @@ body {
   display: none;
   &--visible {
     display: grid;
-    grid-template-columns: repeat(3, 1fr);
+    grid-template-columns: repeat(4, 1fr);
     column-gap: 30px;
     row-gap: 30px;
   }
@@ -85,37 +121,47 @@ body {
   display: flex;
   flex-direction: column;
   gap: 30px;
+  padding: 30px;
+  background-color: #fff;
   align-items: center;
   font-size: 2rem;
+  border-radius: 20px;
   &--invisible {
     display: none;
   }
 }
 
 .card {
-  position: relative;
-  width: 300px;
-  height: 450px;
+  position: relative;  
   cursor: pointer;
   transform-style: preserve-3d;
   transform-origin: center right;
-  transition: transform 0.4s;
-  background-color: white;
-  border: 1px solid black;
-  border-radius: 10px;
+  transition: transform 0.8s;
+  background: radial-gradient( circle farthest-corner at 10% 20%,  rgba(147,67,67,1) 0%, rgba(111,27,27,1) 90% );
+  border: 2px solid black;
+  border-radius: 2px;
 }
-.card.is-flipped {
+.card.is-flipped {  
   transform: translateX(-100%) rotateY(-180deg);
 }
-.card.is-inactive {
+.card.stays-flipped {
+  transform: translateX(-100%) rotateY(-180deg);
   pointer-events:none;
 }
+.card.stays-on-side {
+  transform: translateX(-1000%) rotateY(-180deg);
+  pointer-events:none;
+}
+.card.is-clicked {
+  pointer-events:none;
+}
+
 .card__face {
   display: flex;
   justify-content: center;
   align-items: center;
-  width: 100%;
-  height: 100%;
+  min-width: 180px;
+  min-height: 300px;
   font-weight: bold;
   text-transform: uppercase;
   font-size: 5rem;
@@ -125,4 +171,7 @@ body {
 .card__face--back {
   background: slateblue;
   transform: rotateY(180deg);
+  border-radius: 2px;
+
+  
 }
