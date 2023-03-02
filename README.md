@@ -1,4 +1,4 @@
-# 23-Angular-Services-App
+# 08-Memory-Game
 
 Memory Game in javascript and typescript.
 
