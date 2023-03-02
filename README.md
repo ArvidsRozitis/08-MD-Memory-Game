@@ -1,11 +1,12 @@
-# html_ts_boilerplate
-To start coding open your terminal and write
-```
-npm i
-```
+# 23-Angular-Services-App
 
-When all packages have been installed run:
-```
-npm start
-```
-08
+Memory Game in javascript and typescript.
+
+If you're interested, you can download the repository and open it in your code editor.
+Then, run the following commands: `npm i`, and `npm start`, then open (http://localhost:3000/).
+
+## Preview
+
+![game1](./game1.gif)
+
+![game2](./game2.gif)
